@@ -341,3 +341,5 @@ healthchecksdb
 
 *.swp
 appsettings.Local.json
+appsettings.json
+.env
