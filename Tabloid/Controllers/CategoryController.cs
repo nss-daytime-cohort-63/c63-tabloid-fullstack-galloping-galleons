@@ -35,9 +35,22 @@ namespace Tabloid.Controllers
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetById(int id)
         {
-            return "value";
+            Category category = _categoryRepo.GetById(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                return Ok(category);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<CategoryController>
