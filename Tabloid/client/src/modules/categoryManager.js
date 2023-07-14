@@ -26,3 +26,13 @@ export const postCategory = (category) => {
             body: JSON.stringify(category)
     }).then(resp => resp.json())
 }
+
+export const updateCategory = (id, category) => {
+    return fetch(`${baseUrl}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(category)
+    }).then(resp => resp.json())
+}
