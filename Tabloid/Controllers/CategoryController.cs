@@ -55,7 +55,7 @@ namespace Tabloid.Controllers
 
         // POST api/<CategoryController>
         [HttpPost]
-        public IActionResult Add(Category category)
+        public IActionResult Post(Category category)
         {
             try
             {
@@ -70,13 +70,31 @@ namespace Tabloid.Controllers
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Category category)
         {
+            if(id != category.Id)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                Category cat = _categoryRepo.GetById(id);
+                if(cat == null)
+                {
+                    return NotFound();
+                }
+                _categoryRepo.Update(category);
+                return NoContent();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
         }
     }
