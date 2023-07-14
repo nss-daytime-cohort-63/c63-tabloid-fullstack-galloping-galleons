@@ -76,6 +76,24 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void Update(Category category)
+        {
+            using(var connection = Connection)
+            {
+                connection.Open();
+                using( var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"Update Category
+                                            Set [Name] = @name
+                                            where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", category.Id);
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Category CategoryBuilder(SqlDataReader reader)
         {
             Category category = new()
