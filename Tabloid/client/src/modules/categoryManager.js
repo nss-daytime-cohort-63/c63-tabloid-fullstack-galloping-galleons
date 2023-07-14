@@ -59,7 +59,7 @@ export const updateCategory = (id, category) => {
         body: JSON.stringify(category)
     }).then((resp) => {
         if(resp.ok){
-            return resp.json()
+            return
         }
         else
         {
@@ -74,9 +74,9 @@ export const deleteCategory = (id) => {
         headers: {
 
         }
-    }).then((resp) => {
+    }).then(resp => {
         if(resp.ok){
-            return resp.json()
+            return
         }
         else{
             throw new Error(`Had an error deleting category with id ${id} - does it exist?`)
