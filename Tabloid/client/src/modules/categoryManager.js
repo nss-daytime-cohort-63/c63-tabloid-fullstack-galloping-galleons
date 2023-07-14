@@ -8,13 +8,28 @@ export const getCategories = () => {
         headers: {
             //Authorization: `Bearer ${token}`
         }
-    }).then(resp => resp.json())
+    }).then((resp) => {
+        if(resp.ok){
+            return resp.json()
+        }
+        else {
+            throw new Error("An unknown error occurred while trying to retrieve all categories.")
+        }
+        })
 }
 
 export const getCategoryById = (id) => {
     return fetch(`${baseUrl}/${id}`, {
         method: "GET"
-    }).then(resp => resp.json())
+    }).then((resp) => {
+        if(resp.ok){
+            return resp.json()
+        }
+        else
+        {
+            throw new Error(`An error occurred while trying to retrieve category by id of "${id}"`)
+        }
+    })
 }
 
 export const postCategory = (category) => {
@@ -24,7 +39,15 @@ export const postCategory = (category) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(category)
-    }).then(resp => resp.json())
+    }).then((resp) => {
+        if(resp.ok){
+            return resp.json()
+        }
+        else
+        {
+            throw new Error("An error occurred when trying to post this category. Is it formatted correctly?")
+        }
+    })
 }
 
 export const updateCategory = (id, category) => {
@@ -34,5 +57,29 @@ export const updateCategory = (id, category) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(category)
-    }).then(resp => resp.json())
+    }).then((resp) => {
+        if(resp.ok){
+            return resp.json()
+        }
+        else
+        {
+            throw new Error(`An error occurred while updating the category. Supplied Id: ${id} Supplied category.id: ${category?.id}. Did you mismatch something?`)
+        }
+    })
+}
+
+export const deleteCategory = (id) => {
+    return fetch(`${baseUrl}/${id}`, {
+        method: "DELETE",
+        headers: {
+
+        }
+    }).then((resp) => {
+        if(resp.ok){
+            return resp.json()
+        }
+        else{
+            throw new Error(`Had an error deleting category with id ${id} - does it exist?`)
+        }
+    });
 }
