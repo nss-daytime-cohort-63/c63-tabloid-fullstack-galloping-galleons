@@ -6,7 +6,7 @@ using Tabloid.Utils;
 
 namespace Tabloid.Repositories
 {
-    public class CategoryRepository : BaseRepository
+    public class CategoryRepository : BaseRepository, ICategoryRepository
     {
         public CategoryRepository(IConfiguration configuration) : base(configuration)
         {
@@ -20,11 +20,11 @@ namespace Tabloid.Repositories
             {
                 connection.Open();
 
-                using(var cmd =  connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"Select Id, [Name] from Category";
 
-                    using(SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -44,14 +44,14 @@ namespace Tabloid.Repositories
             using (var connection = Connection)
             {
                 connection.Open();
-                using(var cmd = connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"Select Id, [Name] from Category where Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                         {
                             category = CategoryBuilder(reader);
                         }
@@ -63,10 +63,10 @@ namespace Tabloid.Repositories
 
         public void Add(Category category)
         {
-            using(var connection = Connection)
+            using (var connection = Connection)
             {
                 connection.Open();
-                using(var cmd = connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"Insert into Category ([Name]) OUTPUT Inserted.Id Values (@name)";
                     cmd.Parameters.AddWithValue("@name", category.Name);
@@ -78,10 +78,10 @@ namespace Tabloid.Repositories
 
         public void Update(Category category)
         {
-            using(var connection = Connection)
+            using (var connection = Connection)
             {
                 connection.Open();
-                using( var cmd = connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"Update Category
                                             Set [Name] = @name
@@ -96,10 +96,10 @@ namespace Tabloid.Repositories
 
         public void Delete(int id)
         {
-            using(var connection = Connection)
+            using (var connection = Connection)
             {
                 connection.Open();
-                using(var cmd = connection.CreateCommand())
+                using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = @"Delete from Category where Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
