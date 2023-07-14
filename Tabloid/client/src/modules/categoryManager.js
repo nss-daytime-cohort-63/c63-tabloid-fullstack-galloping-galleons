@@ -16,3 +16,13 @@ export const getCategoryById = (id) => {
         method: "GET"
     }).then(resp => resp.json())
 }
+
+export const postCategory = (category) => {
+    return fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(category)
+    }).then(resp => resp.json())
+}
