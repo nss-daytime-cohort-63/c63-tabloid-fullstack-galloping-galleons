@@ -61,6 +61,21 @@ namespace Tabloid.Repositories
             return category;
         }
 
+        public void Add(Category category)
+        {
+            using(var connection = Connection)
+            {
+                connection.Open();
+                using(var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"Insert into Category ([Name]) OUTPUT Inserted.Id Values (@name)";
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+
+                    category.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         private Category CategoryBuilder(SqlDataReader reader)
         {
             Category category = new()
