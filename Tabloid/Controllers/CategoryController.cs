@@ -13,12 +13,24 @@ namespace Tabloid.Controllers
     {
         private readonly ICategoryRepository _categoryRepo;
 
+        public CategoryController(ICategoryRepository categoryRepository)
+        {
+            _categoryRepo = categoryRepository;
+        }
 
         // GET: api/<CategoryController>
         [HttpGet]
-        public List<Category> Get()
+        public IActionResult Get()
         {
-            
+            try
+            {
+                List<Category> categories = _categoryRepo.Get();
+                return Ok(categories);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<CategoryController>/5
