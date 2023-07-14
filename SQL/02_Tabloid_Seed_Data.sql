@@ -17,6 +17,7 @@ values (1, 'C#'), (2, 'JavaScript'), (3, 'Funny'), (4, 'Scary');
 set identity_insert [Tag] off
 
 set identity_insert [UserProfile] on
+
 insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, CreateDateTime, ImageLocation, UserTypeId, FirebaseUserId) values (1, 'Foo', 'Foo', 'Barington', 'foo@bar.com', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set1', 1, 'cfhNuLwX17XPKtZNgZzWGxONlgE3');
 insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, CreateDateTime, ImageLocation, UserTypeId, FirebaseUserId) values (2, 'rdo1', 'Red', 'Do', 'rdo1@timesonline.co.ukx', '2020-04-20', 'https://robohash.org/nisiautemet.png?size=150x150&set=set1', 2, 'SiTEdZ1QAidJmqPQPYFguS7JR3m2');
 insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, CreateDateTime, ImageLocation, UserTypeId, FirebaseUserId) values (3, 'aotton2', 'Arnold', 'Otton', 'aotton2@ow.lyx', '2020-01-13', 'https://robohash.org/molestiaemagnamet.png?size=150x150&set=set1', 1, 'wqhvgdjxjqkqecuridpvjtwpoacc');

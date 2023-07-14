@@ -341,4 +341,6 @@ healthchecksdb
 
 *.swp
 appsettings.Local.json
-appsettings.json
+Tabloid/appsettings.json
+.env
+
