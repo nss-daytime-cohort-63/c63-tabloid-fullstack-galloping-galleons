@@ -96,6 +96,20 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            Category cat = _categoryRepo.GetById(id);
+            if(cat == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _categoryRepo.Delete(id);
+                return NoContent();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
