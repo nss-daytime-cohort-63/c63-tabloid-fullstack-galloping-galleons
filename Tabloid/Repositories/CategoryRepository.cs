@@ -36,6 +36,31 @@ namespace Tabloid.Repositories
 
             return categories;
         }
+
+        public Category GetById(int id)
+        {
+            Category category = null;
+
+            using (var connection = Connection)
+            {
+                connection.Open();
+                using(var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"Select Id, [Name] from Category where Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            category = CategoryBuilder(reader);
+                        }
+                    }
+                }
+            }
+            return category;
+        }
+
         private Category CategoryBuilder(SqlDataReader reader)
         {
             Category category = new()
