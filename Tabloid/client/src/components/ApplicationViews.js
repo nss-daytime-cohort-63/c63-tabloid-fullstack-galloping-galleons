@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import UserInfo from "./UserInfo";
+import UserInfo from "./UserProfileComponents/UserInfo";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (

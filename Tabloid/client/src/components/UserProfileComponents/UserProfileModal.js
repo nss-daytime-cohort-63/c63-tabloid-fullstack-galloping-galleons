@@ -36,6 +36,8 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size
         ) : (
           <p>Loading user details...</p>
         )}
+        <div><button>Deactivate</button></div>
+
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={closeModal}>

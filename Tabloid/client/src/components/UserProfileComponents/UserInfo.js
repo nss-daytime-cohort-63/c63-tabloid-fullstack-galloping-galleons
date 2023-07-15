@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers, getUserByFirebaseId } from '../modules/profileManager';
+import { getAllUsers, getUserByFirebaseId } from '../../modules/profileManager';
 import { Button, Table } from 'reactstrap';
-import { UserProfileModal } from '../components/UserProfileModal';
-import './tables.css';
+import { UserProfileModal } from './UserProfileModal';
+import '../UserProfileComponents/tables.css';
 
 const UserInfo = () => {
   const [modal, setModal] = useState(false);
