@@ -18,8 +18,8 @@ const UserInfo = () => {
   }, []);
 
   const toggleModal = async (firebaseUserId) => {
-    const user = await getUserByFirebaseId(firebaseUserId); // Fetch user details
-    setUserDetails(user); // Set user details in state
+    const user = await getUserByFirebaseId(firebaseUserId); 
+    setUserDetails(user); 
     setModal(!modal);
   };
 

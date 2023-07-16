@@ -15,9 +15,16 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size
     if (userDetails) {
       setActiveStatus(userDetails.active)
     };
-
-    console.log(activeStatus);
   }, [userDetails])
+
+  const confirmActivate = (userId) => {
+    userId = userDetails.id
+    console.log(userId);
+  }
+  const confirmDeactivate = (userId) => {
+    userId = userDetails.id
+    console.log(userId);
+  }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size={size}>
@@ -54,12 +61,12 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size
           <p>Loading user details...</p>
         )}
         {activeStatus === true ? (
-        <div><Button color='danger'>Deactivate</Button></div>
+          <div><Button color='danger' onClick={confirmDeactivate}>Deactivate</Button></div>
         ) : (
-          <div><Button color='success'>Activate</Button></div>
+          <div><Button color='success' onClick={confirmActivate}>Activate</Button></div>
         )}
       </ModalBody>
-        
+
       <ModalFooter>
         <Button color="secondary" onClick={closeModal}>
           Close
