@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
 namespace Tabloid.Repositories
 {
@@ -8,6 +10,50 @@ namespace Tabloid.Repositories
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 
+        public List<UserProfile> GetAllUsers()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
+                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId, up.Active,
+                               ut.Name AS UserTypeName
+                          FROM UserProfile up
+                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+                    ";
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        var userProfile = new List<UserProfile>();
+                        while (reader.Read())
+                        {
+                            userProfile.Add(new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                                UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                                Active = DbUtils.GetBoolean(reader, "Active"),
+                                UserType = new UserType()
+                                {
+                                    Id = DbUtils.GetInt(reader, "UserTypeId"),
+                                    Name = DbUtils.GetString(reader, "UserTypeName"),
+                                }
+                            });
+                        }
+                        return userProfile;
+                    }
+                }
+            }
+        }
+        
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
@@ -17,7 +63,7 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId, up.Active,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -41,6 +87,7 @@ namespace Tabloid.Repositories
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                            Active = DbUtils.GetBoolean(reader,"Active"),
                             UserType = new UserType()
                             {
                                 Id = DbUtils.GetInt(reader, "UserTypeId"),
@@ -81,6 +128,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {

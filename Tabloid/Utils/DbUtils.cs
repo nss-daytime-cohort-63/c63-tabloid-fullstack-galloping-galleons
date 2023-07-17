@@ -106,6 +106,19 @@ namespace Tabloid.Utils
         }
 
         /// <summary>
+        ///  Get a boolean from a data reader object.
+        ///  This method assumes the value is not NULL.
+        /// </summary>
+        /// <param name="reader">A SqlDataReader that has not exhausted its result set.</param>
+        /// <param name="column">The name of the column from the result set referred to by the reader.</param>
+        /// <returns>The value of the given column.</returns>
+        public static bool GetBoolean(SqlDataReader reader, string column)
+        {
+            return reader.GetBoolean(reader.GetOrdinal(column));
+        }
+
+
+        /// <summary>
         ///  Add a parameter to the given SqlCommand object and gracefully handle null values.
         /// </summary>
         /// <param name="cmd">The command to which to add the parameter.</param>
