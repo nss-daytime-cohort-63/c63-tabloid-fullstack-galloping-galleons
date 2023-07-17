@@ -22,23 +22,31 @@ export default function Header({ isLoggedIn }) {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            { /* When isLoggedIn === true, we will render the Home link */}
-            {isLoggedIn &&
+            {isLoggedIn && (
               <NavItem>
                 <NavLink tag={RRNavLink} to="/">Home</NavLink>
               </NavItem>
-            }
+            )}
+            {isLoggedIn && (
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/userinfo">User Info</NavLink>
+              </NavItem>
+            )}
           </Nav>
           <Nav navbar>
-            {isLoggedIn &&
-              <>
-                <NavItem>
-                  <a aria-current="page" className="nav-link"
-                    style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
-                </NavItem>
-              </>
-            }
-            {!isLoggedIn &&
+            {isLoggedIn && (
+              <NavItem>
+                <a
+                  aria-current="page"
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                  onClick={logout}
+                >
+                  Logout
+                </a>
+              </NavItem>
+            )}
+            {!isLoggedIn && (
               <>
                 <NavItem>
                   <NavLink tag={RRNavLink} to="/login">Login</NavLink>
@@ -47,7 +55,7 @@ export default function Header({ isLoggedIn }) {
                   <NavLink tag={RRNavLink} to="/register">Register</NavLink>
                 </NavItem>
               </>
-            }
+            )}
           </Nav>
         </Collapse>
       </Navbar>
