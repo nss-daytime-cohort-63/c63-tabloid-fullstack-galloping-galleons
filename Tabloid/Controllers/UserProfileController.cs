@@ -49,5 +49,24 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
+        [HttpPut("updateActiveStatus")]
+        public IActionResult UpdateActiveStatus(string firebaseId, bool activeStatus)
+        {
+            try
+            {
+                if (_userProfileRepository.GetByFirebaseUserId(firebaseId) == null)
+                {
+                    return NotFound();
+                }
+                _userProfileRepository.UpdateActiveStatus(firebaseId, activeStatus);
+                return Ok("Active status updated successfully.");
+            }
+            catch (Exception ex)
+            {
+      
+                return StatusCode(500, "An error occurred while updating the active status." + ex.Message);
+            }
+        }
+
     }
 }

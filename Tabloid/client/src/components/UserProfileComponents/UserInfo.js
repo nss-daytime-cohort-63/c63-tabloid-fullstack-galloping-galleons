@@ -33,7 +33,7 @@ const UserInfo = () => {
 
   const toggleNested = () => {
     setNestedModal(!nestedModal);
-    // setCloseAll(true)
+    // Toggle nested modal
     ;
   };
 
