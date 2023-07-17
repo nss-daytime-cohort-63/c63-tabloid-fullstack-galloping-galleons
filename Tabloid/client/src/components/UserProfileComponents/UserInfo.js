@@ -6,6 +6,8 @@ import '../UserProfileComponents/tables.css';
 
 const UserInfo = () => {
   const [modal, setModal] = useState(false);
+  const [nestedModal, setNestedModal] = useState(false);
+  // const [closeAll, setCloseAll] = useState(false);
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState(null); // Updated to null
 
@@ -18,16 +20,36 @@ const UserInfo = () => {
   }, []);
 
   const toggleModal = async (firebaseUserId) => {
-    const user = await getUserByFirebaseId(firebaseUserId); 
-    setUserDetails(user); 
-    setModal(!modal);
+    try {
+      const user = await getUserByFirebaseId(firebaseUserId);
+      setUserDetails(user);
+      setModal(!modal);
+    } catch (error) {
+      console.error('An error occurred while fetching user details:', error);
+      // Handle the error gracefully (e.g., display an error message)
+    }
+  };
+  
+
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+    // setCloseAll(true)
+    ;
   };
 
-  const closeModal = () => {setModal(false)};
+  const closeModal = () => { setModal(false) };
 
   return (
     <>
-      <UserProfileModal isOpen={modal} toggle={toggleModal} closeModal={closeModal} userDetails={userDetails} size="lg" />
+      <UserProfileModal 
+      isOpen={modal} 
+      toggle={toggleModal} 
+      closeModal={closeModal} 
+      toggleNested={toggleNested} 
+      userDetails={userDetails}
+      // closeAll={closeAll}
+      nestedModal={nestedModal}
+      size="lg" />
       <div>
         <Table striped bordered hover>
           <thead>

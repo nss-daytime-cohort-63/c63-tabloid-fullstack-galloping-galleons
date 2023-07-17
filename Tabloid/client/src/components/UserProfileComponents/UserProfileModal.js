@@ -8,7 +8,7 @@ I need a useEffect to set the state based on the information loading
 
 */
 
-export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size }) {
+export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, toggleNested, nestedModal, toggleAll, closeAll, size }) {
   const [activeStatus, setActiveStatus] = useState();
 
   useEffect(() => {
@@ -19,16 +19,18 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size
 
   const confirmActivate = (userId) => {
     userId = userDetails.id
+    toggleNested()
     console.log(userId);
   }
   const confirmDeactivate = (userId) => {
     userId = userDetails.id
+    toggleNested()
     console.log(userId);
   }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} size={size}>
-      <ModalHeader toggle={toggle}>User Profile</ModalHeader>
+      {/* <ModalHeader toggle={toggle}>User Profile</ModalHeader> */}
       <ModalBody>
         {userDetails ? (
           <div>
@@ -65,6 +67,23 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, size
         ) : (
           <div><Button color='success' onClick={confirmActivate}>Activate</Button></div>
         )}
+
+        <Modal
+          isOpen={nestedModal}
+          toggle={toggleNested}
+          onClosed={closeAll ? toggle : undefined}
+        >
+          <ModalHeader className='text-danger'>Caution!</ModalHeader>
+          <ModalBody className='text-danger'>By clicking "Confirm" you will lock this user out of their account!</ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={toggleNested}>
+              Cancel
+            </Button>{' '}
+            <Button color="danger" onClick={toggleAll}>
+              Confirm
+            </Button>
+          </ModalFooter>
+        </Modal>
       </ModalBody>
 
       <ModalFooter>
