@@ -6,6 +6,7 @@ import Hello from "./Hello";
 import CategoryList from "./CategoryList";
 import UserInfo from "./UserProfileComponents/UserInfo";
 import CategoryForm from "./CategoryForm";
+import CategoryEditForm from "./CategoryEditForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -22,6 +23,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Route path="*" element={<p>Whoops, nothing here...</p>} />
           <Route path="categories" element={<CategoryList/>}/>
           <Route path="categories/add" element={<CategoryForm/>}/>
+          <Route path="categories/edit/:id" element={<CategoryEditForm/>}/>
         </Route>
       </Routes>
     </main>

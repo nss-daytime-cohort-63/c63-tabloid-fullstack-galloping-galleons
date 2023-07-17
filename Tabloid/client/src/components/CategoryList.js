@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import Category from "./Category"
 import { deleteCategory, getCategories } from "../modules/categoryManager"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const CategoryList = () => {
+    const navigate = useNavigate();
+
     const loadingCategory = { id: -1, name: "Loading Categories..." }
     const [categories, setCategories] = useState([loadingCategory])
 
@@ -28,6 +30,10 @@ const CategoryList = () => {
                                 deleteCategory(category.id);
                                 getAndSetCategories();
                             }}>Delete</button>
+                            <button onClick={e => {
+                                e.preventDefault();
+                                navigate(`edit/${category.id}`)
+                            }}>Edit</button>
                         </div>
 
                     }
