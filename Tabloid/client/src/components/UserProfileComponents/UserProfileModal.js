@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import { updateActiveStatus } from '../../modules/profileManager';
 
 /*
 Render an Activate or Deactivate button based on active state
@@ -17,15 +18,14 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
     };
   }, [userDetails])
 
-  const confirmActivate = (userId) => {
-    userId = userDetails.id
+  // const confirmActivate = () => {
+  //   toggleNested()
+  // }
+  const confirmActiveStatus = (userId) => {
+    const id = userDetails.id
+    const activeStatus = !userDetails.active
+    updateActiveStatus(id, activeStatus)
     toggleNested()
-    console.log(userId);
-  }
-  const confirmDeactivate = (userId) => {
-    userId = userDetails.id
-    toggleNested()
-    console.log(userId);
   }
 
   return (
@@ -63,9 +63,9 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
           <p>Loading user details...</p>
         )}
         {activeStatus === true ? (
-          <div><Button color='danger' onClick={confirmDeactivate}>Deactivate</Button></div>
+          <div><Button color='danger' onClick={toggleNested}>Deactivate</Button></div>
         ) : (
-          <div><Button color='success' onClick={confirmActivate}>Activate</Button></div>
+          <div><Button color='success' onClick={toggleNested}>Activate</Button></div>
         )}
 
         <Modal
@@ -83,7 +83,7 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
             <Button color="primary" onClick={toggleNested}>
               Cancel
             </Button>{' '}
-            <Button color="danger" onClick={toggleAll}>
+            <Button color="danger" onClick={confirmActiveStatus}>
               Confirm
             </Button>
           </ModalFooter>
