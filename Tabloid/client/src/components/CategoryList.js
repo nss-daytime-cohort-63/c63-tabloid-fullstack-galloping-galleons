@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Category from "./Category"
 import { deleteCategory, getCategories } from "../modules/categoryManager"
+import { Link } from "react-router-dom"
 
 const CategoryList = () => {
     const loadingCategory = { id: -1, name: "Loading Categories..." }
@@ -15,21 +16,24 @@ const CategoryList = () => {
     }, [])
 
     return <div>
-        {
-            categories.map(
-                category => {
-                    return <div className="d-inline-block w-25 flex-row" key={category.id}>
-                        <Category category={category} /> 
-                        <button onClick={e => {
-                            e.preventDefault();
-                            deleteCategory(category.id);
-                            getAndSetCategories();
-                        }}>Delete</button>
-                    </div>
+        <Link to="add">Create New</Link>
+        <div>
+            {
+                categories.map(
+                    category => {
+                        return <div className="d-inline-block w-25 flex-row" key={category.id}>
+                            <Category category={category} />
+                            <button onClick={e => {
+                                e.preventDefault();
+                                deleteCategory(category.id);
+                                getAndSetCategories();
+                            }}>Delete</button>
+                        </div>
 
-                }
-            )
-        }
+                    }
+                )
+            }
+        </div>
     </div>
 }
 
