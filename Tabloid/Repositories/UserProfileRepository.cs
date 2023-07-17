@@ -142,6 +142,7 @@ namespace Tabloid.Repositories
 
                     DbUtils.AddParameter(cmd, "@ActiveStatus", activeStatus);
                     DbUtils.AddParameter(cmd, "@UserId", userid);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

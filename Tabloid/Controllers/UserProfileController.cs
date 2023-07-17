@@ -49,7 +49,7 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
-        [HttpPost("updateActiveStatus")]
+        [HttpPut("updateActiveStatus")]
         public IActionResult updateActiveStatus(int userId, bool activeStatus)
         {
             _userProfileRepository.UpdateActiveStatus(userId, activeStatus);
