@@ -74,7 +74,11 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
           onClosed={closeAll ? toggle : undefined}
         >
           <ModalHeader className='text-danger'>Caution!</ModalHeader>
-          <ModalBody className='text-danger'>By clicking "Confirm" you will lock this user out of their account!</ModalBody>
+          {activeStatus === true ? (
+          <ModalBody className='text-danger'>By clicking "Confirm" you will LOCK this user out of their account.</ModalBody>
+          ):(
+            <ModalBody className='text-danger'>By clicking "Confirm" you will UNLOCK this account allowing user access.</ModalBody>
+          )}
           <ModalFooter>
             <Button color="primary" onClick={toggleNested}>
               Cancel

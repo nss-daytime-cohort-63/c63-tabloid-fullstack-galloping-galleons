@@ -128,6 +128,23 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void UpdateActiveStatus(int userid, bool activeStatus)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE UserProfile 
+                        SET active =@ActiveStatus 
+                        WHERE Id = @UserId";
+
+                    DbUtils.AddParameter(cmd, "@ActiveStatus", activeStatus);
+                    DbUtils.AddParameter(cmd, "@UserId", userid);
+                }
+            }
+        }
         
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)

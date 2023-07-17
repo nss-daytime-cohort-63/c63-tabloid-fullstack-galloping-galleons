@@ -49,5 +49,12 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
+        [HttpPost("updateActiveStatus")]
+        public IActionResult updateActiveStatus(int userId, bool activeStatus)
+        {
+            _userProfileRepository.UpdateActiveStatus(userId, activeStatus);
+
+            return Ok("Active status updated successfully.");
+        }
     }
 }
