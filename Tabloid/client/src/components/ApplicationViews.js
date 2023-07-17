@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import CategoryList from "./CategoryList";
+import UserInfo from "./UserProfileComponents/UserInfo";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -16,6 +17,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="userinfo" element={<UserInfo />} />
           <Route path="*" element={<p>Whoops, nothing here...</p>} />
           <Route path="categories" element={<CategoryList/>}/>
         </Route>
