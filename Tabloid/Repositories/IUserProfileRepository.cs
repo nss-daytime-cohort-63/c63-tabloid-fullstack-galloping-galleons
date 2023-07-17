@@ -8,6 +8,6 @@ namespace Tabloid.Repositories
         void Add(UserProfile userProfile);
         List<UserProfile> GetAllUsers();
         UserProfile GetByFirebaseUserId(string firebaseUserId);
-        void UpdateActiveStatus(int userid, bool activeStatus);
+        void UpdateActiveStatus(string firebaseId, bool activeStatus);
     }
 }

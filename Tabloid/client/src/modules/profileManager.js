@@ -10,13 +10,13 @@ export const getUserByFirebaseId = (firebaseId) => {
 
 //https://localhost:5001/api/UserProfile/updateActiveStatus?userId=3&activeStatus=false
 
-export const updateActiveStatus = (userId, activeStatus) => {
-  fetch(`${baseUrl}/updateActiveStatus?userId=${userId}&activeStatus=${activeStatus}`, {
+export const updateActiveStatus = (firebaseId, activeStatus) => {
+  fetch(`${baseUrl}/updateActiveStatus?firebaseId=${firebaseId}&activeStatus=${activeStatus}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ activeStatus })
+    body: JSON.stringify({ firebaseId, activeStatus })
   })
     .then((response) => {
       return response.json

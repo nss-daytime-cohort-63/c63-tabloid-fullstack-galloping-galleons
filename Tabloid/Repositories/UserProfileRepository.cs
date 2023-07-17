@@ -128,7 +128,7 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void UpdateActiveStatus(int userid, bool activeStatus)
+        public void UpdateActiveStatus(string firebaseId, bool activeStatus)
         {
             using (var conn = Connection)
             {
@@ -138,10 +138,10 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                         UPDATE UserProfile 
                         SET active =@ActiveStatus 
-                        WHERE Id = @UserId";
+                        WHERE FirebaseUserId = @FirebaseUserId";
 
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseId);
                     DbUtils.AddParameter(cmd, "@ActiveStatus", activeStatus);
-                    DbUtils.AddParameter(cmd, "@UserId", userid);
                     cmd.ExecuteNonQuery();
                 }
             }
