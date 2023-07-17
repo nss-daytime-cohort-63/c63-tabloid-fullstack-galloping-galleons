@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCategoryById, updateCategory } from "../modules/categoryManager";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CategoryEditForm = () => {
     const navigate = useNavigate();
@@ -33,6 +33,7 @@ const CategoryEditForm = () => {
                 window.alert("Name must be between 3 and 50 characters, inclusive.")
             }
         }}>Save Changes</button>
+        <Link to="/categories">Go Back</Link>
     </>
 }
 export default CategoryEditForm;
