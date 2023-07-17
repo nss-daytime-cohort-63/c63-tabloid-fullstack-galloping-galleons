@@ -5,6 +5,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import CategoryList from "./CategoryList";
 import UserInfo from "./UserProfileComponents/UserInfo";
+import CategoryForm from "./CategoryForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -20,6 +21,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="*" element={<p>Whoops, nothing here...</p>} />
           <Route path="categories" element={<CategoryList/>}/>
+          <Route path="categories/add" element={<CategoryForm/>}/>
         </Route>
       </Routes>
     </main>

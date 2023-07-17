@@ -11,15 +11,26 @@ const CategoryForm = () => {
 
     const saveCategoryButtonHandler = (e) => {
         e.preventDefault();
-        postCategory(category);
-        navigate("/categories");
+        if(category.Name !== "" || category.Name !== null){
+            if(category.Name.length <= 50 && category.Name.length >= 3)
+            {
+                postCategory(category);
+                navigate("/categories");
+            }
+            else{
+                window.alert("Enter a valid name for the category.")
+            }
+        }
+        else{
+            window.alert("Enter a valid name for the category.")
+        }
     }
 
 
 
     return <>
         <h2>New Category</h2>
-        <input type="text"  placeholder="Category Name..." onChange=
+        <input required minLength={3} maxLength={50} type="text"  placeholder="Category Name..." onChange=
         {
             e => {
                 const categoryCopy={...category}
@@ -27,6 +38,7 @@ const CategoryForm = () => {
                 setCategory(categoryCopy);
             }
         } />
-
+        <button type="submit" onClick={e => {saveCategoryButtonHandler(e)} }>Submit</button>
     </>
 }
+export default CategoryForm;
