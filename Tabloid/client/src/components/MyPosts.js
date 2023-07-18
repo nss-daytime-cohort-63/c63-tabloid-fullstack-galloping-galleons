@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 import { getPostsByAuthor } from '../modules/PostManager';
+
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -20,9 +22,13 @@ const MyPosts = () => {
                 {posts.map((post) => (
                     <Card key={post.id} className="m-4">
                         <CardBody>
-                            <h2>{post.title}</h2>
+                            <h2>
+                                <Link to={`/posts/${post.id}`}>
+                                    {post.title}
+                                </Link>
+                            </h2>
                             <strong>Author: {post.userProfile.displayName}</strong>
-                            <p>Category: {post.category ? post.category.name : "Uncategorized"}</p>
+                            <p>Category: {post.categoryName}</p>
                         </CardBody>
                     </Card>
                 ))}
