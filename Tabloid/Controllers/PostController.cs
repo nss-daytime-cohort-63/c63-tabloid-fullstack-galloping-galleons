@@ -4,6 +4,7 @@ using System;
 using Tabloid.Repositories;
 using Tabloid.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tabloid.Controllers
 {
@@ -19,6 +20,7 @@ namespace Tabloid.Controllers
 
         // https://localhost:5001/api/posts/
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             try
@@ -34,6 +36,7 @@ namespace Tabloid.Controllers
 
         // https://localhost:5001/api/myposts/ByAuthor/1
         [HttpGet("ByAuthor/{firebaseUserId}")]
+        [Authorize]
         public IActionResult GetPostsByAuthor(string firebaseUserId)
         {
             List<Post> post = _postRepository.GetPostsByAuthor(firebaseUserId);
