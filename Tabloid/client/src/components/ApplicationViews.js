@@ -7,7 +7,8 @@ import CategoryList from "./CategoryList";
 import UserInfo from "./UserProfileComponents/UserInfo";
 import CategoryForm from "./CategoryForm";
 import CategoryEditForm from "./CategoryEditForm";
-import Post from "./Post";
+import Post from "./PostList";
+import MyPosts from "./MyPosts";
 
 export default function ApplicationViews({ isLoggedIn }) {
   
@@ -20,14 +21,15 @@ export default function ApplicationViews({ isLoggedIn }) {
             index
             element={isLoggedIn ? <Hello /> : <Navigate to="/login" />}
           />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="userinfo" element={<UserInfo />} />
-          <Route path="posts" element={<Post />} />
-          <Route path="*" element={<p>Whoops, nothing here...</p>} />
-          <Route path="categories" element={<CategoryList/>}/>
-          <Route path="categories/add" element={<CategoryForm/>}/>
-          <Route path="categories/edit/:id" element={<CategoryEditForm/>}/>
+          <Route path="login" element={isLoggedIn ? <Navigate to="/" /> : <Login />} />
+          <Route path="register" element={isLoggedIn ? <Navigate to="/" /> : <Register />  } />
+          <Route path="userinfo" element={isLoggedIn ? <UserInfo /> : <Navigate to="/login" />} />
+          <Route path="posts" element={isLoggedIn ? <Post /> : <Navigate to="/login" />} />
+          <Route path="myposts" element={isLoggedIn ? <MyPosts /> : <Navigate to="/login" />} />
+          <Route path="*" element={isLoggedIn ? <p>Whoops, nothing here...</p> : <Navigate to="/login" />} />
+          <Route path="categories" element={isLoggedIn ? <CategoryList /> : <Navigate to="/login" />} />
+          <Route path="categories/add" element={isLoggedIn ? <CategoryForm /> : <Navigate to="/login" />} />
+          <Route path="categories/edit/:id" element={isLoggedIn ? <CategoryEditForm /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </main>
