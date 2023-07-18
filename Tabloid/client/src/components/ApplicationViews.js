@@ -3,7 +3,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import CategoryList from "./CategoryList";
 import UserInfo from "./UserProfileComponents/UserInfo";
+import CategoryForm from "./CategoryForm";
+import CategoryEditForm from "./CategoryEditForm";
 import Post from "./PostList";
 import MyPosts from "./MyPosts";
 
@@ -17,11 +20,14 @@ export default function ApplicationViews({ isLoggedIn }) {
             element={isLoggedIn ? <Hello /> : <Navigate to="/login" />}
           />
           <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="userinfo" element={<UserInfo />} />
-          <Route path="posts" element={<Post />} />
+          <Route path="register" element={isLoggedIn ? <Register /> : <Navigate to="/login" />} />
+          <Route path="userinfo" element={isLoggedIn ? <UserInfo /> : <Navigate to="/login" />} />
+          <Route path="posts" element={isLoggedIn ? <Post /> : <Navigate to="/login" />} />
           <Route path="myposts" element={<MyPosts />} />
-          <Route path="*" element={<p>Whoops, nothing here...</p>} />
+          <Route path="*" element={isLoggedIn ? <p>Whoops, nothing here...</p> : <Navigate to="/login" />} />
+          <Route path="categories" element={isLoggedIn ? <CategoryList /> : <Navigate to="/login" />} />
+          <Route path="categories/add" element={isLoggedIn ? <CategoryForm /> : <Navigate to="/login" />} />
+          <Route path="categories/edit/:id" element={isLoggedIn ? <CategoryEditForm /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </main>

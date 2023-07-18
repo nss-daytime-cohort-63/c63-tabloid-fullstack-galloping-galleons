@@ -1,31 +1,27 @@
 import { React, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import { updateActiveStatus } from '../../modules/profileManager';
 
-/*
-Render an Activate or Deactivate button based on active state
-I need a useState to hold if the user is active or not
-I need a useEffect to set the state based on the information loading
-
-*/
 
 export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, toggleNested, nestedModal, toggleAll, closeAll, size }) {
   const [activeStatus, setActiveStatus] = useState();
 
+  // If userDetails is not null we will set userDetails
   useEffect(() => {
     if (userDetails) {
       setActiveStatus(userDetails.active)
     };
   }, [userDetails])
 
-  const confirmActivate = (userId) => {
-    userId = userDetails.id
+  
+  /*This function takes firebaseId from the selected user and switches the activeStatus to the 
+  opposite of what it currently is and passes it to the updateActiveStatus function in profileManager.
+*/
+  const confirmActiveStatus = () => {
+    const userid = userDetails.firebaseUserId
+    const activeStatus = !userDetails.active
+    updateActiveStatus(userid, activeStatus)
     toggleNested()
-    console.log(userId);
-  }
-  const confirmDeactivate = (userId) => {
-    userId = userDetails.id
-    toggleNested()
-    console.log(userId);
   }
 
   return (
@@ -63,9 +59,9 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
           <p>Loading user details...</p>
         )}
         {activeStatus === true ? (
-          <div><Button color='danger' onClick={confirmDeactivate}>Deactivate</Button></div>
+          <div><Button color='danger' onClick={toggleNested}>Deactivate</Button></div>
         ) : (
-          <div><Button color='success' onClick={confirmActivate}>Activate</Button></div>
+          <div><Button color='success' onClick={toggleNested}>Activate</Button></div>
         )}
 
         <Modal
@@ -74,12 +70,16 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
           onClosed={closeAll ? toggle : undefined}
         >
           <ModalHeader className='text-danger'>Caution!</ModalHeader>
-          <ModalBody className='text-danger'>By clicking "Confirm" you will lock this user out of their account!</ModalBody>
+          {activeStatus === true ? (
+          <ModalBody className='text-danger'>By clicking "Confirm" you will LOCK this user out of their account.</ModalBody>
+          ):(
+            <ModalBody className='text-danger'>By clicking "Confirm" you will UNLOCK this account allowing user access.</ModalBody>
+          )}
           <ModalFooter>
             <Button color="primary" onClick={toggleNested}>
               Cancel
             </Button>{' '}
-            <Button color="danger" onClick={toggleAll}>
+            <Button color="danger" onClick={confirmActiveStatus}>
               Confirm
             </Button>
           </ModalFooter>
