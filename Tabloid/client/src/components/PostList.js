@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardBody } from 'reactstrap';
-import { getAllPosts } from './PostManager.js';
+import { getAllPosts } from '../modules/PostManager.js';
 
 function Post() {
     const [posts, setPosts] = useState([]);

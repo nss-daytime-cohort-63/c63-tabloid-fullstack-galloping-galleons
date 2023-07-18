@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody } from 'reactstrap';
-import { getPostsByAuthor } from './PostManager';
 import firebase from 'firebase';
+import { getPostsByAuthor } from '../modules/PostManager';
 
 const MyPosts = () => {
     const [posts, setPosts] = useState([]);
