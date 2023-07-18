@@ -11,7 +11,7 @@ export const getAllPosts = () => {
             }
         }).then((res) => {
             if (res.ok) {
-                return res.json()
+                return res.json();
             } else {
                 throw new Error("An unknown error occurred while trying to fetch all posts.")
             }
@@ -28,10 +28,27 @@ export const getPostsByAuthor = (firebaseUserId) => {
             }
         }).then((res) => {
             if (res.ok) {
-                return res.json()
+                return res.json();
             } else {
                 throw new Error("An unknown error occurred while trying to fetch posts by author.")
             }
         });
     });
 };
+
+export const getPostById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to fetch a single post.")
+            }
+        });
+    });
+}
