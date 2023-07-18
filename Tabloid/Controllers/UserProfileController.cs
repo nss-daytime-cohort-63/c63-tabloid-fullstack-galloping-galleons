@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System;
 using Tabloid.Models;
 using Tabloid.Repositories;
@@ -66,6 +67,11 @@ namespace Tabloid.Controllers
       
                 return StatusCode(500, "An error occurred while updating the active status." + ex.Message);
             }
+        }
+        [HttpGet("GetActiveStatusByEmail")]
+        public bool GetActiveStatusByEmail(string email)
+        {
+            return _userProfileRepository.GetActiveStatusByEmail(email);
         }
 
     }

@@ -10,6 +10,8 @@ import CategoryEditForm from "./CategoryEditForm";
 import Post from "./Post";
 
 export default function ApplicationViews({ isLoggedIn }) {
+  
+
   return (
     <main>
       <Routes>
