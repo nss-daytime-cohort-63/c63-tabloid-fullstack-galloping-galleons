@@ -7,17 +7,12 @@ import { getActiveStatusByEmail } from "../modules/profileManager";
 
 export default function Login() {
 
-  // useEffect(() => {
-  //   getActiveStatusByEmail(email)
-  //     .then(response => setActiveStatus(response.activeStatus))
-  //     .catch(error => console.log(error));
-  // }, [email]);
+
 
   const navigate = useNavigate();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [activeStatus, setActiveStatus] = useState();
 
   const loginSubmit = (e) => {
     e.preventDefault();
