@@ -68,5 +68,56 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public List<Post> GetPostsByAuthor(string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT  
+                            P.Id, P.Content, P.ImageLocation, P.CreateDateTime, P.PublishDateTime,
+                            P.Title as PostTitle,
+                            CONCAT(U.FirstName, ' ', U.LastName) AS Author,
+                            C.Name AS CategoryName
+                        FROM
+                            Post P
+                        JOIN
+                            UserProfile U ON P.UserProfileId = U.Id
+                        JOIN
+                            Category C ON P.CategoryId = C.Id
+                        WHERE
+                            U.FirebaseUserId = @FirebaseUserId
+                        ORDER BY
+                            P.CreateDateTime DESC";
+
+                    cmd.Parameters.AddWithValue("@FirebaseUserId", firebaseUserId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    var posts = new List<Post>();
+
+                    while (reader.Read())
+                    {
+                        posts.Add(new Post()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Title = DbUtils.GetString(reader, "PostTitle"),
+                            Content = DbUtils.GetString(reader, "Content"),
+                            ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                            PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
+                            CategoryName = DbUtils.GetString(reader, "CategoryName"),
+                            UserProfile = new UserProfile
+                            {
+                                DisplayName = DbUtils.GetString(reader, "Author"),
+                            },
+                        });
+                    }
+                    return posts;
+                }
+            }
+        }
     }
 }
