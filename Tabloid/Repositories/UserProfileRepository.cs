@@ -3,6 +3,7 @@ using Tabloid.Models;
 using Tabloid.Utils;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
+using System;
 
 namespace Tabloid.Repositories
 {
@@ -143,6 +144,33 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseId);
                     DbUtils.AddParameter(cmd, "@ActiveStatus", activeStatus);
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public bool GetActiveStatusByEmail(string email)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT active
+                        FROM UserProfile
+                        WHERE email = @email
+                        ";
+                    DbUtils.AddParameter(cmd, "@email", email);
+
+                    var result = cmd.ExecuteScalar();
+                    if(result != null && result !=DBNull.Value)
+                    {
+                        return (bool)result;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }

@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'react
 import { updateActiveStatus } from '../../modules/profileManager';
 
 
-export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, toggleNested, nestedModal, toggleAll, closeAll, size }) {
+export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, toggleNested, nestedModal, toggleAll, closeAll, size, updatedDetail }) {
   const [activeStatus, setActiveStatus] = useState();
 
   // If userDetails is not null we will set userDetails
@@ -22,6 +22,7 @@ export function UserProfileModal({ isOpen, toggle, closeModal, userDetails, togg
     const activeStatus = !userDetails.active
     updateActiveStatus(userid, activeStatus)
     toggleNested()
+    updatedDetail(userid)
   }
 
   return (

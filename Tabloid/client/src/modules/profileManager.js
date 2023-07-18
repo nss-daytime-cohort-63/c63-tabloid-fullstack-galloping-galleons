@@ -8,6 +8,12 @@ export const getUserByFirebaseId = (firebaseId) => {
   return fetch(`${baseUrl}/${firebaseId}`).then((response) => response.json());
 };
 
+
+export const getActiveStatusByEmail = (email) => {
+  return fetch(`${baseUrl}/GetActiveStatusByEmail?email=${email}`).then((response) => response.json()) 
+
+};
+
 //https://localhost:5001/api/UserProfile/updateActiveStatus?userId=3&activeStatus=false
 
 export const updateActiveStatus = (firebaseId, activeStatus) => {

@@ -29,11 +29,20 @@ const UserInfo = () => {
       // Handle the error gracefully (e.g., display an error message)
     }
   };
+  const updatedDetail = async (firebaseUserId) => {
+    try {
+      const user = await getUserByFirebaseId(firebaseUserId);
+      setUserDetails(user);
+    } catch (error) {
+      console.error('An error occurred while fetching user details:', error);
+      // Handle the error gracefully (e.g., display an error message)
+    }
+  };
   
 
   const toggleNested = () => {
     setNestedModal(!nestedModal);
-    // Toggle nested modal
+    // setCloseAll(true)
     ;
   };
 
@@ -42,6 +51,7 @@ const UserInfo = () => {
   return (
     <>
       <UserProfileModal 
+      updatedDetail = {updatedDetail}
       isOpen={modal} 
       toggle={toggleModal} 
       closeModal={closeModal} 
