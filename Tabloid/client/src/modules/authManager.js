@@ -1,7 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { getActiveStatusByEmail } from "./profileManager";
 
 const _apiUrl = "/api/userprofile";
+
 
 const _doesUserExist = (firebaseUserId) => {
   return getToken().then((token) =>
@@ -32,20 +34,21 @@ export const getToken = () => firebase.auth().currentUser.getIdToken();
 
 export const login = (email, pw) => {
   return firebase.auth().signInWithEmailAndPassword(email, pw)
-    .then((signInResponse) => _doesUserExist(signInResponse.user.uid))
-    .then((doesUserExist) => {
-      if (!doesUserExist) {
-
-        // If we couldn't find the user in our app's database, we should logout of firebase
-        logout();
-
-        throw new Error("Something's wrong. The user exists in firebase, but not in the application database.");
-      }
-    }).catch(err => {
+    .then((signInResponse) => {
+      return Promise.all([_doesUserExist(signInResponse.user.uid), getActiveStatusByEmail(signInResponse.user.email)])
+        .then(([doesUserExist, activeStatus]) => {
+          if (!doesUserExist || !activeStatus) {
+            logout();
+            throw new Error("Something's wrong. The user exists in firebase, but not in the application database.");
+          }
+        });
+    })
+    .catch(err => {
       console.error(err);
       throw err;
     });
 };
+
 
 
 export const logout = () => {

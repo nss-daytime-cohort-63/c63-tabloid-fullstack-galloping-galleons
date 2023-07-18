@@ -12,6 +12,8 @@ import MyPosts from "./MyPosts";
 import PostDetail from "./PostDetail";
 
 export default function ApplicationViews({ isLoggedIn }) {
+  
+
   return (
     <main>
       <Routes>
